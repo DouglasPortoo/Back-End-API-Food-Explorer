@@ -2,7 +2,7 @@
 exports.up = knex => knex.schema.createTable("pratos", table => {
   table.increments("id");
   
-  table.text("img").notNullable();
+  table.text("img");
   table.text("title").notNullable();
   table.text("description").notNullable();
 
