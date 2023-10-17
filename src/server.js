@@ -10,7 +10,7 @@ const cookieParser= require("cookie-parser")
 
 const AppError = require("./utils/AppError");
 
-// const uploadConfig = require('./configs/upload')
+const uploadConfig = require('./configs/upload')
 
 const app = express()
 app.use(express.json())
@@ -38,7 +38,7 @@ app.use((err, request, response, next) => {
     });
 });
 
-// app.use("/files",express.static(uploadConfig.UPLOADS_FOLDER))
+app.use("/files",express.static(uploadConfig.UPLOADS_FOLDER))
 
 const PORT = process.env.PORT || 3333
 app.listen(PORT, () => console.log("ON", PORT))

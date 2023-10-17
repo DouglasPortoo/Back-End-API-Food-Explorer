@@ -1,6 +1,6 @@
 const knex = require("../database/knex")
 
-const movieNotesControllers = {
+const pratosController = {
   create: async (req, res) => {
     const { title, description, ingredients } = req.body
     const user_id = req.user.id
@@ -91,4 +91,4 @@ const movieNotesControllers = {
   }
 }
 
-module.exports = movieNotesControllers
+module.exports = pratosController
