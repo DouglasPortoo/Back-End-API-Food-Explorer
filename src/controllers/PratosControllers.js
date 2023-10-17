@@ -4,9 +4,13 @@ const pratosController = {
   create: async (req, res) => {
     const { title, description, ingredients } = req.body
     const user_id = req.user.id
-    
+
+    // const avatarfilename = req.file.filename
+
+    // const filename = await DiskStorage.saveFile(avatarfilename)
 
     const [prato_id] = await knex("pratos").insert({
+      // img:filename,
       title,
       description,
       user_id
