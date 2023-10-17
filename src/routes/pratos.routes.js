@@ -10,5 +10,6 @@ pratosRouter.use(ensureAuth)
 pratosRouter.post('/', pratosControllers.create)
 pratosRouter.get('/:id', pratosControllers.show)
 pratosRouter.delete('/:id', pratosControllers.delete)
+pratosRouter.get('/', pratosControllers.index)
 
 module.exports = pratosRouter

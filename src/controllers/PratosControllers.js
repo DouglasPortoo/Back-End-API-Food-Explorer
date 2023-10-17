@@ -46,48 +46,49 @@ const movieNotesControllers = {
     return res.json("Prato deletado")
   },
 
-  // index: async (req, res) => {
-  //   const { title } = req.query
-  //   const user_id = req.user.id
+  index: async (req, res) => {
+    const { title,tags } = req.query
+    const user_id = req.user.id
 
-  //   // let notes
+    let pratos
 
-  //   // if (tags) {
-  //   //   const filterTags = tags.split(',').map(tag => tag.trim())
+    if (tags) {
+      const filterTags = tags.split(',').map(tag => tag.trim())
 
-  //   //   notes = await knex("movie_tags")
-  //   //     .select([
-  //   //       "movie_notes.id",
-  //   //       "movie_notes.title",
-  //   //       "movie_notes.user_id",
-  //   //     ])
-  //   //     .where("movie_notes.user_id", user_id)
-  //   //     .whereLike("movie_notes.title", `%${title}%`)
-  //   //     .whereIn("movie_tags.name", filterTags)
-  //   //     .innerJoin("movie_notes", "movie_notes.id", "movie_tags.note_id")
-  //   //     .groupBy("movie_notes.id")
-  //   //     .orderBy("movie_notes.title")
+      pratos = await knex("prato_tags")
+        .select([
+          "pratos.id",
+          "pratos.title",
+          "pratos.user_id",
+        ])
+        .where("pratos.user_id", user_id)
+        .whereLike("pratos.title", `%${title}%`)
+        .whereIn("prato_tags.ingredients", filterTags)
+        .innerJoin("pratos", "pratos.id", "prato_tags.prato_id")
+        .groupBy("pratos.id")
+        .orderBy("pratos.title")
 
-  //   // } else {}
+    } else {
+      pratos = await knex("pratos")
+      .where({ user_id })
+      .whereLike("title", `%${title}%`)
+      .orderBy("created_at")
+    }
 
-  //   const notes = await knex("movie_notes")
-  //     .where({ user_id })
-  //     .whereLike("title", `%${title}%`)
-  //     .orderBy("created_at")
+    const userTags = await knex("prato_tags").where({ user_id })
+    console.log(userTags)
+    const pratosWhithTags = pratos.map(prato => {
+      const pratoTags = userTags.filter(ingredients => ingredients.prato_id === prato.id)
 
+      return {
+        ...prato,
+        tags: pratoTags
+      }
+    })
+    console.log(pratosWhithTags)
 
-  //   const userTags = await knex("movie_tags").where({ user_id })
-  //   const notesWhithTags = notes.map(note => {
-  //     const noteTags = userTags.filter(tag => tag.note_id === note.id)
-
-  //     return {
-  //       ...note,
-  //       tags: noteTags
-  //     }
-  //   })
-
-  //   return res.json(notesWhithTags)
-  // }
+    return res.json(pratosWhithTags)
+  }
 }
 
 module.exports = movieNotesControllers
