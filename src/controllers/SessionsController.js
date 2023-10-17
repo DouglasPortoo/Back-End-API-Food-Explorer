@@ -20,11 +20,11 @@ class SessionsController {
       throw new AppError("E-mail e/ou senha incorreta.", 401);
     }
 
-    const { secret, expiresIn } = authConfig.jwt;
+    const { secret } = authConfig;
 
     const token = sign({ role:user.role }, secret, {
       subject: String(user.id),
-      expiresIn
+      
     });
 
     response.cookie("token", token, { 
@@ -36,7 +36,7 @@ class SessionsController {
 
     delete user.password
 
-    response.status(201).json({ user });
+    response.status(201).json({ user,token });
   }
 }
 
