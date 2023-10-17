@@ -38,13 +38,13 @@ const movieNotesControllers = {
     })
   },
 
-  // delete: async (req, res) => {
-  //   const { id } = req.params
+  delete: async (req, res) => {
+    const { id } = req.params
 
-  //   await knex("movie_notes").where({ id }).delete()
+    await knex("pratos").where({ id }).delete()
 
-  //   return res.json("Nota deletada")
-  // },
+    return res.json("Prato deletado")
+  },
 
   // index: async (req, res) => {
   //   const { title } = req.query
