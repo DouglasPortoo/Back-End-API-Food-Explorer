@@ -8,5 +8,6 @@ const pratosRouter = Router()
 pratosRouter.use(ensureAuth)
 
 pratosRouter.post('/', pratosControllers.create)
+pratosRouter.get('/:id', pratosControllers.show)
 
 module.exports = pratosRouter

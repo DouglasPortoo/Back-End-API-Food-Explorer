@@ -20,8 +20,6 @@ function ensureAuthenticated(req, res, next) {
       role,
     }
 
-    console.log(req.user)
-
     return next()
 
   } catch (error) {
