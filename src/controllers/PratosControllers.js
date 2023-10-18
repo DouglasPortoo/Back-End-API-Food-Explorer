@@ -2,7 +2,7 @@ const knex = require("../database/knex")
 
 const pratosController = {
   create: async (req, res) => {
-    const { title, description, ingredients } = req.body
+    const { title, description,category ,ingredients} = req.body
     const user_id = req.user.id
 
     // const avatarfilename = req.file.filename
@@ -13,6 +13,7 @@ const pratosController = {
       // img:filename,
       title,
       description,
+      category,
       user_id
     })
 

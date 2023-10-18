@@ -5,6 +5,7 @@ exports.up = knex => knex.schema.createTable("pratos", table => {
   table.text("img");
   table.text("title").notNullable();
   table.text("description").notNullable();
+  table.text("category").notNullable();
 
   table.integer('user_id').references('id').inTable('users')
 
