@@ -54,7 +54,6 @@ const pratosController = {
   index: async (req, res) => {
     const { title } = req.query
 
-    console.log(title)
     let pratos = await knex("pratos").whereLike('title', `%${title}%`)
 
     return res.json(pratos)
