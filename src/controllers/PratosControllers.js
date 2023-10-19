@@ -1,19 +1,16 @@
 const knex = require("../database/knex")
+const DiskStorage = require("../providers/DiskStorage")
 
 const pratosController = {
   create: async (req, res) => {
-    const { title, description, category, ingredients } = req.body
+    const { title, category,description, price, ingredients } = req.body
     const user_id = req.user.id
-
-    // const avatarfilename = req.file.filename
-
-    // const filename = await DiskStorage.saveFile(avatarfilename)
-
+    
     const [prato_id] = await knex("pratos").insert({
-      // img:filename,
       title,
-      description,
       category,
+      description,
+      price,
       user_id
     })
 
