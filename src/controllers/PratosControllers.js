@@ -35,7 +35,7 @@ const pratosController = {
     const user_id = req.user.id
     try {
 
-    const tags = await knex("prato_tags").where({ prato_id: id }).del()
+    await knex("prato_tags").where({ prato_id: id }).del()
 
     const insertIngredients = ingredients.map((ingredients) => {
       return {
@@ -49,9 +49,9 @@ const pratosController = {
 
       await knex('pratos').where({id}).update("title", title )
 
-      await knex('pratos').where({ id}).update("description", description )
+      await knex('pratos').where({id}).update("description", description )
 
-      await knex('pratos').where({ id}).update("category",  category)
+      await knex('pratos').where({id}).update("category",  category)
 
       await knex('pratos').where({ id}).update("price",  price)
 

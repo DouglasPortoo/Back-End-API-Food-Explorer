@@ -19,7 +19,8 @@ pratosRouter.get('/:id', pratosControllers.show)
 pratosRouter.delete('/:id', pratosControllers.delete)
 pratosRouter.get('/', pratosControllers.index)
 pratosRouter.put('/:id', pratosControllers.update)
-pratosRouter.patch("/avatar",ensureAuth,upload.single('avatar'), pratoImgController.update)
+pratosRouter.patch("/avatar/:id",upload.single('avatar'), pratoImgController.update)
+
 
 
 module.exports = pratosRouter

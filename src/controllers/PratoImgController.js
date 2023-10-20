@@ -4,26 +4,26 @@ const DiskStorage = require("../providers/DiskStorage")
 const pratoImgController = {
 
   update: async (req, res) => {
-    const prato_id = req.query
+    const { id } = req.params
     const avatarfilename = req.file.filename
 
-      const [prato] = await knex("pratos").where({ id: prato_id })
+    const [prato] = await knex("pratos").where({ id })
 
-      if (!prato) {
-        throw new Error('apenas usuarios cadastrados podem mudar o avatar')
-      }
+    if (!prato) {
+      throw new Error('apenas usuarios cadastrados podem mudar o avatar')
+    }
 
-      if (prato.img) {
-        await DiskStorage.deleteFile(prato.img)
-      }
+    if (prato.img) {
+      await DiskStorage.deleteFile(prato.img)
+    }
 
-      const filename = await DiskStorage.saveFile(avatarfilename)
+    const filename = await DiskStorage.saveFile(avatarfilename)
 
-      prato.img = filename
+    prato.img = filename
 
-      await knex("pratos").where({ id: prato_id }).update("img", prato.img)
+    await knex("pratos").where({ id }).update("img", prato.img)
 
-      return res.json([prato])
+    return res.json([prato])
 
   },
 }
