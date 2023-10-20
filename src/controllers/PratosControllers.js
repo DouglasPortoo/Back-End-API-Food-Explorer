@@ -28,6 +28,43 @@ const pratosController = {
 
   },
 
+  update: async (req, res) => {
+
+    const { title, description,category, price,ingredients } = req.body
+    const { id } = req.params
+    const user_id = req.user.id
+    try {
+
+    const tags = await knex("prato_tags").where({ prato_id: id }).del()
+
+    const insertIngredients = ingredients.map((ingredients) => {
+      return {
+        prato_id:id,
+        ingredients,
+        user_id
+      }
+    })
+
+    await knex("prato_tags").insert(insertIngredients)
+
+      await knex('pratos').where({id}).update("title", title )
+
+      await knex('pratos').where({ id}).update("description", description )
+
+      await knex('pratos').where({ id}).update("category",  category)
+
+      await knex('pratos').where({ id}).update("price",  price)
+
+      res.status(201).json("Prato atualizado")
+
+    } catch (err) {
+      if (err instanceof Error) {
+        return res.status(400).json({ message: err.message })
+      }
+    }
+
+  },
+
   show: async (req, res) => {
     const { id } = req.params
 

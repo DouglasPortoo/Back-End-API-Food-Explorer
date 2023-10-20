@@ -16,7 +16,7 @@ class UsersController {
 
     await knex("users").insert({ name, email, password: hashedPassword });
 
-    return response.status(201).json();
+    return response.status(201).json("Usuario criado com sucesso.");
   }
 }
 
