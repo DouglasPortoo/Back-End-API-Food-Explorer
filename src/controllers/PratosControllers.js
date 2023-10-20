@@ -80,6 +80,12 @@ const pratosController = {
   delete: async (req, res) => {
     const { id } = req.params
 
+    const [prato] = await knex("pratos").where({ id })
+
+    if (prato.img) {
+      await DiskStorage.deleteFile(prato.img)
+    }
+
     await knex("pratos").where({ id }).delete()
 
     return res.json("Prato deletado")
