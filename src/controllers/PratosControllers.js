@@ -11,7 +11,6 @@ const pratosController = {
     const imageFileName = request.file.filename;
 
     const ingredientsArray = Array(ingredients)
-    console.log(ingredientsArray)
 
     // Saving image file
     const filename = await DiskStorage.saveFile(imageFileName);
