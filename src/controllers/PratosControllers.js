@@ -2,19 +2,31 @@ const knex = require("../database/knex")
 const DiskStorage = require("../providers/DiskStorage")
 
 const pratosController = {
-  create: async (req, res) => {
-    const { title, category,description, price, ingredients } = req.body
-    const user_id = req.user.id
-    
-    const [prato_id] = await knex("pratos").insert({
-      title,
-      category,
-      description,
-      price,
-      user_id
-    })
+  create: async (request, response) => {
 
-    const insertIngredients = ingredients.map((ingredients) => {
+    const { title, description, category, price, ingredients } = request.body;
+    const user_id = request.user.id
+
+    // Requesting image filename
+    const imageFileName = request.file.filename;
+
+    const ingredientsArray = Array(ingredients)
+    console.log(ingredientsArray)
+
+    // Saving image file
+    const filename = await DiskStorage.saveFile(imageFileName);
+
+    // Inserting the infos into the database
+    const [prato_id]= await knex("pratos").insert({
+        img: filename,
+        title,
+        description,
+        price,
+        category,
+        user_id
+    });
+
+    const insertIngredients = ingredientsArray.map((ingredients) => {
       return {
         prato_id,
         ingredients,
@@ -24,7 +36,7 @@ const pratosController = {
 
     await knex("prato_tags").insert(insertIngredients)
 
-    return res.json("Prato cadastrado")
+    return response.json("Prato cadastrado")
 
   },
 

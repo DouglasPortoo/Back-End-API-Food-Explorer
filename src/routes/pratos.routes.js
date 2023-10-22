@@ -14,7 +14,7 @@ const ensureAuth = require("../middlewares/ensureAuthenticated")
 const pratosRouter = Router()
 pratosRouter.use(ensureAuth)
 
-pratosRouter.post('/', pratosControllers.create)
+pratosRouter.post('/',upload.single('avatar'),pratosControllers.create)
 pratosRouter.get('/:id', pratosControllers.show)
 pratosRouter.delete('/:id', pratosControllers.delete)
 pratosRouter.get('/', pratosControllers.index)
