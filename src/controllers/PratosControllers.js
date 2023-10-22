@@ -10,7 +10,7 @@ const pratosController = {
     // Requesting image filename
     const imageFileName = request.file.filename;
 
-    const ingredientsArray = Array(ingredients)
+    const ingredientsArray = ingredients.split(',')
 
     // Saving image file
     const filename = await DiskStorage.saveFile(imageFileName);
