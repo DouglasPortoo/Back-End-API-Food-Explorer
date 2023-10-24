@@ -7,23 +7,31 @@ const pratoImgController = {
     const { id } = req.params
     const avatarfilename = req.file.filename
 
-    const [prato] = await knex("pratos").where({ id })
+    try {
 
-    if (!prato) {
-      throw new Error('apenas usuarios cadastrados podem mudar o avatar')
+      const [prato] = await knex("pratos").where({ id })
+
+      if (!prato) {
+        throw new Error('apenas usuarios cadastrados podem mudar o avatar')
+      }
+
+      if (prato.img) {
+        await DiskStorage.deleteFile(prato.img)
+      }
+
+      const filename = await DiskStorage.saveFile(avatarfilename)
+
+      prato.img = filename
+
+      await knex("pratos").where({ id }).update("img", prato.img)
+
+      return res.json([prato])
+
+    } catch (error) {
+      if (error instanceof Error) {
+        return res.status(400).json({ message: error.message })
+      }
     }
-
-    if (prato.img) {
-      await DiskStorage.deleteFile(prato.img)
-    }
-
-    const filename = await DiskStorage.saveFile(avatarfilename)
-
-    prato.img = filename
-
-    await knex("pratos").where({ id }).update("img", prato.img)
-
-    return res.json([prato])
 
   },
 }
