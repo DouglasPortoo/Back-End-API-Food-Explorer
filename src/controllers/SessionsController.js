@@ -29,14 +29,15 @@ class SessionsController {
 
       response.cookie("token", token, {
         httpOnly: true,
-        sameSite: "Strict",
+        sameSite: "none",
         secure: true,
-        maxAge: 15 * 60 * 100 //15min
+        maxAge: 15 * 60 * 1000 //15min
       })
 
       delete user.password
 
-      response.status(201).json({ user, token })
+      response.status(201).json( {user })
+      // response.status(201).json({ user, token })
 
     } catch(error) {
       if (error instanceof Error) {
