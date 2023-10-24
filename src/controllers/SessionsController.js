@@ -2,7 +2,6 @@ const { compare } = require("bcryptjs");
 const { sign } = require("jsonwebtoken");
 const knex = require("../database/knex");
 const authConfig = require("../configs/auth");
-const AppError = require("../utils/AppError");
 
 class SessionsController {
   async create(request, response) {

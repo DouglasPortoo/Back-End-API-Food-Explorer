@@ -1,14 +1,10 @@
 require("dotenv/config")
-require("express-async-errors");
-
 
 const cors = require("cors")
 const express = require('express')
 const routes = require('./routes')
 
 const cookieParser= require("cookie-parser")
-
-const AppError = require("./utils/AppError");
 
 const uploadConfig = require('./configs/upload')
 
@@ -21,22 +17,6 @@ app.use(cors({
 }));
 
 app.use(routes)
-
-app.use((err, request, response, next) => {
-    if (err instanceof AppError) {
-      return response.status(err.statusCode).json({
-        status: "error",
-        message: err.message,
-      });
-    }
-  
-    console.error(err);
-  
-    return response.status(500).json({
-      status: "error",
-      message: "Internal server error",
-    });
-});
 
 app.use("/files",express.static(uploadConfig.UPLOADS_FOLDER))
 
