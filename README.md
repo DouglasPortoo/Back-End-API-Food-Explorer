@@ -4,7 +4,7 @@
 
 # Apresentação do projeto
 
-Este é um projeto de um cardápio digital para um restaurante fictício.
+Este é uma API de um cardápio digital para um restaurante fictício.
 
 Trata-se de uma aplicação back-end simulando um restaurante que vai desde a visualização de um prato , a pesquisa de um prato pelo nome, adicionar um prato, editar um prato e muito mais.
 
