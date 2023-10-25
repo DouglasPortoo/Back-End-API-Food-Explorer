@@ -81,7 +81,7 @@ Inicie o servidor
 
 Segue o projeto Front-End
 
-[Food Explorer - Front-End](https://github.com/DouglasPortoo/Front-end-Desafio-Final-Explorer/tree/main)
+[WEB](https://github.com/DouglasPortoo/Front-end-Desafio-Final-Explorer/tree/main)
 
 
 ## 🔗 Links
