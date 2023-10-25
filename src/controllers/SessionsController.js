@@ -11,13 +11,13 @@ class SessionsController {
       const user = await knex("users").where({ email }).first();
 
       if (!user) {
-        throw new Error("E-mail e/ou senha incorreta.", 401);
+        throw new Error("E-mail e/ou senha incorreta.");
       }
 
       const passwordMatched = await compare(password, user.password);
 
       if (!passwordMatched) {
-        throw new Error("E-mail e/ou senha incorreta.", 401);
+        throw new Error("E-mail e/ou senha incorreta.");
       }
 
       const { secret } = authConfig;
@@ -31,17 +31,17 @@ class SessionsController {
         httpOnly: true,
         sameSite: "none",
         secure: true,
-        maxAge: 15 * 60 * 1000 //15min
+        
       })
 
       delete user.password
 
       response.status(201).json( {user })
-      // response.status(201).json({ user, token })
+      
 
     } catch(error) {
       if (error instanceof Error) {
-        return response.status(400).json({ message: error.message })
+        return response.status(401).json({ message: error.message })
       }
     }
 }
