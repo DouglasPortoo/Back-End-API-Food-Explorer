@@ -49,6 +49,15 @@ login e senha:
   senha: 12345
 ```
 
+## Teste a aplicação como um Cliente
+
+login e senha:
+
+```bash
+  e-mail: cliente@email.com
+  senha: 12345
+```
+
 
 ## Rodando localmente
 
