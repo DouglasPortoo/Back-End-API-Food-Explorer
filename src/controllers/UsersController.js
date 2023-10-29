@@ -19,7 +19,7 @@ class UsersController {
       return response.status(201).json("Usuario criado com sucesso.");
     } catch (error) {
       if (error instanceof Error) {
-        return res.status(400).json({ message: error.message })
+        return response.status(400).json({ message: error.message })
       }
     }
   }
