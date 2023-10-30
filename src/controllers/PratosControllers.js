@@ -16,13 +16,13 @@ const pratosController = {
     const filename = await DiskStorage.saveFile(imageFileName);
 
     // Inserting the infos into the database
-    const [prato_id]= await knex("pratos").insert({
-        img: filename,
-        title,
-        description,
-        price,
-        category,
-        user_id
+    const [prato_id] = await knex("pratos").insert({
+      img: filename,
+      title,
+      description,
+      price,
+      category,
+      user_id
     });
 
     const insertIngredients = ingredientsArray.map((ingredients) => {
@@ -41,32 +41,33 @@ const pratosController = {
 
   update: async (req, res) => {
 
-    const { title, description,category, price,ingredients } = req.body
+    const { title, description, category, price, ingredients } = req.body
     const { id } = req.params
     const user_id = req.user.id
     try {
 
-    await knex("prato_tags").where({ prato_id: id }).del()
+      await knex("prato_tags").where({ prato_id: id }).del()
 
-    const insertIngredients = ingredients.map((ingredients) => {
-      return {
-        prato_id:id,
-        ingredients,
-        user_id
-      }
-    })
+      const insertIngredients = ingredients.map((ingredients) => {
+        return {
+          prato_id: id,
+          ingredients,
+          user_id
+        }
+      })
 
-    await knex("prato_tags").insert(insertIngredients)
+      await knex("prato_tags").insert(insertIngredients)
 
-      await knex('pratos').where({id}).update("title", title )
+      await knex('pratos')
+        .where({ id })
+        .update({
+          title,
+          description,
+          category,
+          price
+        });
 
-      await knex('pratos').where({id}).update("description", description )
-
-      await knex('pratos').where({id}).update("category",  category)
-
-      await knex('pratos').where({ id}).update("price",  price)
-
-      res.status(201).json("Prato atualizado")
+      res.status(201).json("Prato atualizado");
 
     } catch (err) {
       if (err instanceof Error) {
